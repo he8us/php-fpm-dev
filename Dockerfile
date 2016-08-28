@@ -20,4 +20,3 @@ RUN \
     cp modules/xdebug.so $XDEBUG_EXTENSION_PATH
 
 CMD ["/boot.sh", "php-fpm"]
-
