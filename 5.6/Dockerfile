@@ -7,6 +7,11 @@ COPY confd/ /etc/confd
 ENV XDEBUG_VERSION 2.5.0
 
 RUN \
-    export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" \
-    && pecl install xdebug-$XDEBUG_VERSION
-    && docker-php-ext-enable xdebug
+    apk --no-cache add \
+        --virtual .phpize-deps \
+        build-base \
+        autoconf \
+    && export CFLAGS="$PHP_CFLAGS" CPPFLAGS="$PHP_CPPFLAGS" LDFLAGS="$PHP_LDFLAGS" \
+    && pecl install xdebug-$XDEBUG_VERSION \
+    && docker-php-ext-enable xdebug \
+    && apk del .phpize-deps
